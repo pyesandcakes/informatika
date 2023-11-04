@@ -67,8 +67,8 @@ class Euronet(Bankomat):
         return super().isplata(iznos,kartica)
 stanje=random.randint(1000,10000)
 iznos=random.randint(100,10000)
-visa=Kartica("Zaba",stanje)
-bankomat=Euronet(20000)
+visa=Kartica("OTP",stanje)
+bankomat=Zaba(20000)
 if visa.vlasnik!=bankomat.banka:
     print("Provizija je: ",bankomat.provizija)
 x=bankomat.isplata(iznos,visa)
