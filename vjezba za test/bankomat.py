@@ -17,56 +17,61 @@ class Bankomat():
             vrijednost=kartica.isplata(iznos)
             if vrijednost==True:
                 self.novci-=iznos
-                return("BACAJ PARE")
+                return("Procesiranje u tijeku")
             else:
                 return("Il mi nemamo para, il ti nemas.")
 class OTP(Bankomat):
-    def __init__(self, novci, banka="OTP"):
+    def __init__(self, novci, banka="OTP",provizija=0.025):
         super().__init__(novci, banka)
+        self.provizija=provizija
     def isplata(self, iznos, kartica):
         if kartica.vlasnik!=self.banka and kartica.vlasnik!="Revolut":
-            provizija=0.025*iznos
-            if provizija<3.32:
-                provizija=3.32
-            iznos+=provizija
+            if self.provizija*iznos<3.32:
+                self.provizija=3.32
+            else:
+                iznos+=self.provizija
         return super().isplata(iznos,kartica)
 class Zaba(Bankomat):
-    def __init__(self, novci, banka="Zaba"):
+    def __init__(self, novci, banka="Zaba",provizija=0.28):
         super().__init__(novci, banka)
+        self.provizija=provizija
     def isplata(self, iznos, kartica):
         if kartica.vlasnik!=self.banka and kartica.vlasnik!="Revolut":
-            provizija=0.25*iznos
-            if provizija<3.50:
-                provizija=3.50
-            iznos+=provizija
+            if self.provizija*iznos<1.25:
+                self.provizija=1.25
+            else:
+                iznos+=self.provizija
         return super().isplata(iznos,kartica)
 class Addiko(Bankomat):
-    def __init__(self, novci, banka="Addiko"):
+    def __init__(self, novci, banka="Addiko",provizija=1.5):
         super().__init__(novci, banka)
+        self.provizija=provizija
     def isplata(self, iznos, kartica):
         if kartica.vlasnik!=self.banka and kartica.vlasnik!="Revolut":
-            provizija=3.52*iznos
-            if provizija<1:
-                provizija=1
-            iznos+=provizija
+            if self.provizija*iznos<3.75:
+                self.provizija=3.75
+            else:
+                iznos+=self.provizija
         return super().isplata(iznos,kartica)
 class Euronet(Bankomat):
-    def __init__(self, novci, banka="Euronet"):
+    def __init__(self, novci, banka="Euronet",provizija=8):
         super().__init__(novci, banka)
+        self.provizija=provizija
     def isplata(self, iznos, kartica):
-        if kartica.vlasnik=="Revolut":
-            provizija=0
-        else:
-            provizija=8*iznos
-            if provizija<20:
-                provizija=20
-        iznos+=provizija
+        if kartica.vlasnik!="Revolut":
+            if self.provizija*iznos<20:
+                self.provizija=20
+            else:
+                iznos+=self.provizija
         return super().isplata(iznos,kartica)
 visa=Kartica("Zaba",55000)
-bankomat=Euronet(20000)
+bankomat=OTP(20000)
+if visa.vlasnik!=bankomat.banka:
+    print("Provizija je: ",bankomat.provizija)
 print(bankomat.isplata(5000,visa))
-print("Stanje kartice je: ",visa.stanje)
-print("Stanje bankomata je: ",bankomat.novci)
+print("Stanje kartice je: ",round(visa.stanje,2))
+print("Stanje bankomata je: ",round(bankomat.novci,2))
 print("Banka kartice je: ",visa.vlasnik)
 print("Vlasnik bankomata je: ",bankomat.banka)
-print("Preostalo novaca u bankomatu je: ",bankomat.novci)
+print("Preostalo novaca u bankomatu je: ",round(bankomat.novci,2))
+
