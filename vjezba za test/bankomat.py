@@ -75,11 +75,13 @@ x=bankomat.isplata(iznos,visa)
 print(x)
 if x=="Il mi nemamo para, il ti nemas.":
     quit()
-print("Stanje kartice je: ",round(visa.stanje,2))
-print("Stanje bankomata je: ",round(bankomat.novci,2))
-print("Banka kartice je: ",visa.vlasnik)
-print("Vlasnik bankomata je: ",bankomat.banka)
-print("Preostalo novaca u bankomatu je: ",round(bankomat.novci,2))
+if (input("Želite li vidjeti podatke transakcije? (da/ne) ")=="da"):
+    print("Stanje kartice je: ",round(visa.stanje,2))
+    print("Stanje bankomata je: ",round(bankomat.novci,2))
+    print("Banka kartice je: ",visa.vlasnik)
+    print("Vlasnik bankomata je: ",bankomat.banka)
+    print("Preostalo novaca u bankomatu je: ",round(bankomat.novci,2))
 if x=="Procesiranje u tijeku":
+    print("")
     print("Uspješno ste podigli: ",iznos,"eura.")
 
