@@ -1,3 +1,4 @@
+import random
 class Kartica():
     def __init__(self,banka,stanje):
         self.stanje=stanje
@@ -64,14 +65,21 @@ class Euronet(Bankomat):
             else:
                 iznos+=self.provizija
         return super().isplata(iznos,kartica)
-visa=Kartica("Zaba",55000)
-bankomat=OTP(20000)
+stanje=random.randint(1000,10000)
+iznos=random.randint(100,10000)
+visa=Kartica("Zaba",stanje)
+bankomat=Euronet(20000)
 if visa.vlasnik!=bankomat.banka:
     print("Provizija je: ",bankomat.provizija)
-print(bankomat.isplata(5000,visa))
+x=bankomat.isplata(iznos,visa)
+print(x)
+if x=="Il mi nemamo para, il ti nemas.":
+    quit()
 print("Stanje kartice je: ",round(visa.stanje,2))
 print("Stanje bankomata je: ",round(bankomat.novci,2))
 print("Banka kartice je: ",visa.vlasnik)
 print("Vlasnik bankomata je: ",bankomat.banka)
 print("Preostalo novaca u bankomatu je: ",round(bankomat.novci,2))
+if x=="Procesiranje u tijeku":
+    print("Uspješno ste podigli: ",iznos,"eura.")
 
