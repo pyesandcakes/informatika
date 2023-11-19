@@ -9,8 +9,8 @@ class Vrijeme():
     
 datum_kraja = date(2024, 6, 21)
 danasnji_datum = date.today()
-
-#broj=Vrijeme(input("Unesi ime i prezime učenika: "))
+ime=input("Unesi ime učenika: ")
+broj=Vrijeme(ime)
 #print(broj.ucenik, "do kraja nastavne godine ima još", broj.preostalo(datum_kraja,danasnji_datum),"dana.")
 
 class Maturant(Vrijeme):
@@ -19,5 +19,5 @@ class Maturant(Vrijeme):
     def preostalo(self,kraj,danas):
         return(kraj-danas).days
 datum_kraja_matur = date(2024, 5, 26)
-broj2=Maturant(input("Unesi ime i prezime maturanta: "))
-print(broj2.ucenik, "do kraja nastavne godine ima još", broj2.preostalo(datum_kraja_matur,danasnji_datum),"dana.")
+broj2=Maturant(ime)
+print(broj.ucenik, "do kraja nastavne godine ima još", broj2.preostalo(datum_kraja_matur,danasnji_datum),"dana.")
